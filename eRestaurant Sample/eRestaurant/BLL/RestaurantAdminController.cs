@@ -48,11 +48,17 @@ namespace eRestaurant.BLL
         #region Query 
         public List<Waiter> ListAllWaiters()
         {
-            throw new NotImplementedException();
+            using (RestaurantContext context = new RestaurantContext)
+            {
+                return context.Waiters.ToList();
+            }
         }
         public Waiter GetWaiter(int waiterID)
         {
-            throw new NotImplementedException();
+            using (RestaurantContext context = new RestaurantContext)
+            {
+                return context.Waiters.Find(waiterID);
+            }
         }
         #endregion
         #endregion
