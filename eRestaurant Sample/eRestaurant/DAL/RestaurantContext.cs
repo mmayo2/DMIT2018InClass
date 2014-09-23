@@ -12,7 +12,7 @@ namespace eRestaurant.DAL
     {
         // A constructor that calls a base-class constructor to specify the
         // connection string we need to use
-        public RestaurantContext() : base("name-EatIn") { }
+        public RestaurantContext() : base("name=EatIn") { }
 
         #region Table to Entity mappings
         public DbSet<Table> Tables { get; set; }
