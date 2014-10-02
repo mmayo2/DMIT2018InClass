@@ -1,5 +1,6 @@
 ﻿using eRestaurant.DAL;
 using eRestaurant.Entities;
+using eRestaurant.Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,31 @@ namespace eRestaurant.BLL
             using (var context = new RestaurantContext())
             {
                 return context.Items.Include(it => it.MenuCategory).ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<Category> ListCategorizedMenuItems()
+        {
+            using (var context = new RestaurantContext())
+            {
+                var data = from cat in context.MenuCategories
+                           orderby cat.Description
+                           select new Category()
+                           {
+                               Description = cat.Description,
+                               MenuItems = from item in cat.Items
+                                           where item.Active
+                                           orderby item.Description
+                                           select new MenuItem()
+                                           {
+                                               Description = item.Description,
+                                               Price = item.CurrentPrice,
+                                               Calories = item.Calories,
+                                               Comment = item.Comment                                           
+                                           }
+                           };
+                return data.ToList();
             }
         }
     }
