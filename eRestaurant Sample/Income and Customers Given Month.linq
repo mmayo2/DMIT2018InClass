@@ -30,3 +30,22 @@ var billsInMonth = 	from item in Bills
 				   	};
 // billsInMonth.Dump();
 
+// Temp: some variables for formatting
+var monthName = DateTime.Today.AddMonths(-1).ToString("MMMM");
+var title = string.Format("Total income for {0} {1}", monthName, year);
+
+// Temp: Perform some quick aggregate to check my query
+billsInMonth.Sum(tm => tm.TotalAmount).ToString("C").Dump(title, true);
+
+billsInMonth.Sum(tm => tm.NumberOfCustomers).Dump("Patrons Served", true);
+
+// 2) Build a report from the billsInMonth data
+var report = from item in billsInMonth
+			 group item by item.BillDate.Day into dailySummary
+			 select new 
+			 {
+				Day = dailySummary.Key,
+				DailyCustomers = dailySummary.Sum(grp => grp.NumberOfCustomers),
+				Income = dailySummary.Sum(grp => grp.TotalAmount)
+			 };
+report.OrderBy(r => r.Day).Dump("Daily Income");
