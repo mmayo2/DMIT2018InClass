@@ -14,7 +14,19 @@ namespace eRestaurant.Entities.DTOs
         public int? BillID { get; set; }
         public bool Served { get; set; }
         public string OrderComments { get; set; }
+        
+        public decimal TotalAmount
+        {
+            get 
+            {
+                decimal value = 0; //Default value
+                if (Items != null)
+                    value = Items.Sum(x => x.ItemTotal);
 
-        public List<OrderItem> Items { get; set; }
+                return value;
+            }
+        }
+
+        public IList<OrderItem> Items { get; set; }
     }
 }
