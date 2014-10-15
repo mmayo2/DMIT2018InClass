@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="ManageSpecialEvents.aspx.cs" Inherits="Admin_ManageSpecialEvents" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="my" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <div class="row col-md-12">
         <h1>Special Events <span class="glyphicon glyphicon-glass"></span></h1>
@@ -60,10 +63,11 @@
             </fieldset>
         </LayoutTemplate>
     </asp:ListView>
+    <my:MessageUserControl runat="server" ID="MessageUserControl" />
     <asp:ObjectDataSource runat="server" ID="SpecialEventsDataSource"
         DataObjectTypeName="eRestaurant.Entities.SpecialEvent" DeleteMethod="DeleteSpecialEvent" 
         InsertMethod="AddSpecialEvent" OldValuesParameterFormatString="original_{0}" 
         SelectMethod="ListAllEvents" TypeName="eRestaurant.BLL.RestaurantAdminController" 
-        UpdateMethod="UpdateSpecialEvent"></asp:ObjectDataSource>
+        UpdateMethod="UpdateSpecialEvent" OnDeleted="HandleCRUDErrors" OnInserted="HandleCRUDErrors" OnUpdated="HandleCRUDErrors"></asp:ObjectDataSource>
 </asp:Content>
 

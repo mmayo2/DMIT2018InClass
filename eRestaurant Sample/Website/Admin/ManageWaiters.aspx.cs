@@ -62,4 +62,33 @@ public partial class Admin_ManageWaiters : System.Web.UI.Page
         WaiterID.Text = person.WaiterID.ToString();
         // TODO: Re-populate drop down list of waiters and set the selected value as well
     }
+    protected void Update_Click(object sender, EventArgs e)
+    {
+        int temp;
+        if (int.TryParse(WaiterID.Text, out temp))
+            MessageUserControl.TryRun(UpdateWaiter, "Update Succeeded", "The waiter information was updated.");
+        else
+            MessageUserControl.ShowInfo("Please look up a waiter before clicking 'Update'.");
+    }
+
+    public void UpdateWaiter()
+    {
+        Waiter person = new Waiter()
+        {
+            WaiterID = int.Parse(WaiterID.Text),
+            FirstName = FirstName.Text,
+            LastName = LastName.Text,
+            Address = Address.Text,
+            Phone = Phone.Text,
+            HireDate = DateTime.Parse(HireDate.Text)
+        };
+        DateTime firedOn;
+        if (DateTime.TryParse(ReleaseDate.Text, out firedOn))
+            person.ReleaseDate = firedOn;
+
+        var controller = new RestaurantAdminController();
+        controller.UpdateWaiter(person);
+        //WaiterID.Text = person.WaiterID.ToString();
+        // TODO: Re-populate drop down list of waiters and set the selected value as well
+    }
 }

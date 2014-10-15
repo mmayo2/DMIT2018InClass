@@ -37,15 +37,15 @@
             <asp:TextBox ID="Address" runat="server"></asp:TextBox>
 
             <asp:Label ID="Label7" runat="server" Text="Hire Date" AssociatedControlID="HireDate" />
-            <asp:TextBox ID="HireDate" runat="server"></asp:TextBox>
+            <asp:TextBox ID="HireDate" runat="server" TextMode="Date"></asp:TextBox>
 
             <asp:Label ID="Label8" runat="server" Text="Release Date" AssociatedControlID="ReleaseDate" />
-            <asp:TextBox ID="ReleaseDate" runat="server"></asp:TextBox>
+            <asp:TextBox ID="ReleaseDate" runat="server" TextMode="Date"></asp:TextBox>
         </fieldset>
 
         <fieldset data-style="btn">
             <asp:LinkButton ID="Add" runat="server" Text="Add Waiter" OnClick="Add_Click" />
-            <asp:LinkButton ID="Update" runat="server" Text="Update Waiter" />
+            <asp:LinkButton ID="Update" runat="server" Text="Update Waiter" OnClick="Update_Click" />
             <asp:LinkButton ID="Delete" runat="server" Text="Delete Waiter" />
             <asp:LinkButton ID="Clear" runat="server" Text="Clear Fields" />
         </fieldset>
