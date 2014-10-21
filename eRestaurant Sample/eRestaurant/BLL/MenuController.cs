@@ -1,6 +1,7 @@
 ﻿using eRestaurant.DAL;
 using eRestaurant.Entities;
 using eRestaurant.Entities.DTOs;
+using eRestaurant.Entities.POCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,5 +48,7 @@ namespace eRestaurant.BLL
                 return data.ToList();
             }
         }
+
+        
     }
 }
