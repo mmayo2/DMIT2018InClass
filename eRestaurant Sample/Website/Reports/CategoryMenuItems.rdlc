@@ -6,19 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.01017in</Width>
+              <Width>1.74975in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.656in</Width>
+              <Width>1.36633in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.22892in</Width>
+              <Width>0.60317in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.22892in</Width>
+              <Width>0.91642in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.22892in</Width>
+              <Width>1.13517in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -789,7 +789,7 @@
         <DataSetName>CategoryMenuItemDS</DataSetName>
         <Top>0.76736in</Top>
         <Height>1in</Height>
-        <Width>7.35292in</Width>
+        <Width>5.77083in</Width>
         <Style>
           <Border>
             <Style>None</Style>
