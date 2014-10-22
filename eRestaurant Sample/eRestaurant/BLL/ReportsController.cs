@@ -33,6 +33,24 @@ namespace eRestaurant.BLL
 
                 return results.ToList(); // this was .Dump() in Linqpad
             }
-        }  
+        }
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public List<CategorizedItemSale> TotalCategorizedItemSales()
+        {
+            using (var context = new RestaurantContext())
+            {
+                var results = from info in context.BillItems
+			                  orderby info.Item.MenuCategory.Description, info.Item.Description
+			                  select new CategorizedItemSale
+			                  {
+			  		                CategoryDescription = info.Item.MenuCategory.Description,
+					                ItemDescription = info.Item.Description,
+					                Quantity = info.Quantity,
+					                Price = info.SalePrice,
+					                Cost = info.UnitCost
+			                  };
+            return results.ToList();
+            }
+        }
     }
 }
