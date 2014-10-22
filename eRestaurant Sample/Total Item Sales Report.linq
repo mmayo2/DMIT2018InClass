@@ -18,4 +18,5 @@ var results = from info in BillItems
 					Price = info.SalePrice,
 					Cost = info.UnitCost
 			  };
+results.Count().Dump();
 results.Dump();
