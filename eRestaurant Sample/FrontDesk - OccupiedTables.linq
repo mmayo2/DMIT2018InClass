@@ -1,6 +1,6 @@
 <Query Kind="Statements">
   <Connection>
-    <ID>9f0fd28d-3e5b-4f7d-b832-88838f4d2edd</ID>
+    <ID>8dec46bb-5e1e-4dca-9a96-e4acb25d107f</ID>
     <Persist>true</Persist>
     <Server>.</Server>
     <Database>eRestaurant</Database>
@@ -21,7 +21,8 @@ var step1 = from data in Tables
 							&& billing.BillDate.Month == date.Month
 							&& billing.BillDate.Day == date.Day
 							&& billing.BillDate.TimeOfDay <= time
-//							&& (!billing.PaidStatus || billing.OrderPaid >= time)
+							&& (!billing.OrderPaid.HasValue || billing.OrderPaid >= time)
+//						    && (!billing.PaidStatus || billing.OrderPaid >= time)
 						select billing,
 				Reservations = from booking in data.ReservationTables
 							   from billing in booking.Reservation.Bills
@@ -29,6 +30,7 @@ var step1 = from data in Tables
 							&& billing.BillDate.Month == date.Month
 							&& billing.BillDate.Day == date.Day
 							&& billing.BillDate.TimeOfDay <= time
+							&& (!billing.OrderPaid.HasValue || billing.OrderPaid >= time)
 //							&& (!billing.PaidStatus || billing.OrderPaid >= time)
 						select billing
 			};
@@ -40,7 +42,13 @@ var step2 = from data in step1.ToList()
 				Table = data.Table,
 				Seating = data.Seating,
 				CommonBilling = from info in data.Bills.Union(data.Reservations)
-								select info
+								select new // info // changed to get only needed info, not entire entity
+								{
+									BillID = info.BillID,
+									BillTotal = info.BillItems.Sum(bi => bi.Quantity * bi.SalePrice),
+									Waiter = info.Waiter.FirstName,
+									Reservation = info.Reservation
+								}
 			};
 step2.Dump("Step 2 of my queries - unioning the result");
 
@@ -62,6 +70,17 @@ var step4 = from data in step3
 			Taken = data.Taken,
 			BillID = data.Taken ?
 					 data.CommonBilling.BillID
-				   : (int?) null
+				   : (int?) null,
+			BillTotal = data.Taken ?
+						data.CommonBilling.BillTotal
+				      : (decimal?) null,
+			Waiter = data.Taken ?
+					 data.CommonBilling.Waiter
+					  : (string) null,
+			ReservationName = data.Taken ?
+							  (data.CommonBilling.Reservation != null ?
+							   data.CommonBilling.Reservation.CustomerName : (string) null)
+							: (string) null
+							   
 		};
 step4.Dump("Step 4 of my queries - my final results that I need for the form");
