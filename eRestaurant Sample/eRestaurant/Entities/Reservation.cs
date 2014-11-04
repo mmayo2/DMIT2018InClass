@@ -24,6 +24,7 @@ namespace eRestaurant.Entities
         public string EventCode { get; set; }
 
         #region Navigation Properties
+        public virtual ICollection<Bill> Bills { get; set; }
         public virtual SpecialEvent Event { get; set; }
         public virtual ICollection<Table> Tables { get; set; }
         #endregion

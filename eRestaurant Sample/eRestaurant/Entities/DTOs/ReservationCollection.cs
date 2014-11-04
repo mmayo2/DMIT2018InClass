@@ -10,7 +10,7 @@ namespace eRestaurant.Entities.DTOs
     {
 
         public List<ReservationSummary> Reservations { get; set; }
-
+        public TimeSpan SeatingTime { get { return new TimeSpan(Time, 0, 0); } }
         public int Time { get; set; }
     }
 }
