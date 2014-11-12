@@ -1,4 +1,5 @@
 ﻿using EatIn.UI;
+using eRestaurant.BLL;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -96,6 +97,10 @@ public partial class UserControls_MessageUserControl : System.Web.UI.UserControl
             callback();
             return true;
         }
+        catch (BusinessRuleException ex)
+        {
+            HandleException(ex);
+        }
         catch (DbEntityValidationException ex)
         {
             HandleException(ex);
@@ -118,6 +123,20 @@ public partial class UserControls_MessageUserControl : System.Web.UI.UserControl
                           Error = error.ErrorMessage
                       };
         ShowExceptions(details, STR_TEXT_ValidationErrors, STR_TITLE_ValidationErrors, STR_TITLE_ICON_warning, STR_PANEL_danger);
+    }
+
+    /// <summary>
+    /// Handles a customer BusinessRuleExceptoin by displaying the details and the general error.
+    /// </summary>
+    /// <param name="ex"></param>
+    private void HandleException(BusinessRuleException ex)
+    {
+        var details = from detail in ex.RuleDetails
+                      select new
+                      {
+                          Error = detail
+                      };
+        ShowExceptions(details, ex.Message, STR_TITLE_ValidationErrors, STR_TITLE_ICON_warning, STR_PANEL_danger);
     }
     /// <summary>
     /// Handles an Exception by getting the root of the error and showing it as a General Exception.
