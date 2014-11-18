@@ -9,6 +9,6 @@ namespace eRestaurant.Entities.Security
 {
     public class ApplicationUser : IdentityUser
     {
-
+        public int? WaiterID { get; set; }
     }
 }
